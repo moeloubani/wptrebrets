@@ -11,11 +11,18 @@ License: A "Slug" license name e.g. GPL2
 */
 
 //Set options page
+require 'inc/admin/Options.php';
 
 //Retrieve data for options
+require 'inc/Options.php';
 
 //Get feed
+require 'inc/Feed.php';
 
 //Save feed as posts
+require 'inc/Save.php';
 
 //Set shortcode to display on site
+require 'inc/Shortcodes.php';
+
+//Instantiate plugin

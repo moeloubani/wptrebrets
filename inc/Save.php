@@ -46,6 +46,14 @@ class Save
 
     public function posts()
     {
+        //get post data
 
+        //create post
+
+        //organize data into custom fields
+
+        //store first photo as featured
+
+        //store remaining photos in array in custom field
     }
 }

@@ -4,6 +4,7 @@
 ## Directory-based project format
 .idea/
 Dev/
+.DS_Store
 # if you remove the above rule, at least ignore user-specific stuff:
 # .idea/workspace.xml
 # .idea/tasks.xml

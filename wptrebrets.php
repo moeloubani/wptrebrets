@@ -32,13 +32,13 @@ require 'inc/Shortcodes.php';
 
 //get feed info from feed class
 
-$thing = new \wptrebrets\inc\Feed("lp_dol, ml_num, addr, bath_tot, br, county, rltr, rms, s_r, st, st_num, status, zip", "2", "D14hcd", "W2925698,C2902118", "Kf$7439", "http://rets.torontomls.net:6103/rets-treb3pv/server/login");
+$thing = new \wptrebrets\inc\Feed("lp_dol, ml_num, addr, bath_tot, br, county, rltr, rms, s_r, status, zip, yr_built, area, timestamp_sql, pix_updt, idx_dt, legal_desc, ad_text", 3, "D14hcd", "W2925698,C2902118", "Kf$7439", "http://rets.torontomls.net:6103/rets-treb3pv/server/login");
 $thing->start();
 $thing->connect();
 $thing->search();
 
-//print_r($thing->show());
-$save = new \wptrebrets\inc\Save($thing->mls);
-$save->photos($thing->photos());
+print_r($thing->show());
+//$save = new \wptrebrets\inc\Save($thing->mls);
+//$save->photos($thing->photos());
 
 //$listings = $thing->show();

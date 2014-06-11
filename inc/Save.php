@@ -8,9 +8,10 @@ class Save
     protected $photos;
     protected $mls;
 
-    function __construct($mls)
+    function __construct($mls, $photos)
     {
         $this->mls = $mls;
+        $this->photos = $photos;
     }
 
 
@@ -35,6 +36,7 @@ class Save
 
             foreach ($photos as $photo) {
                 file_put_contents($dir.'/'.$n.'.jpg', $photo['Data']);
+                
                 $n++;
             }
 
@@ -46,10 +48,14 @@ class Save
 
     public function posts(Array $post)
     {
+
         //get post data
         $property_formatted = array();
 
+        //loop through properties found
         foreach ($post as $property) {
+
+            //reassign fields to ones that look good
 
             $property_formatted['price'] = $property['Lp_dol'];
             $property_formatted['mls'] = $property['Ml_num'];
@@ -67,6 +73,7 @@ class Save
             $property_formatted['last_updated_photos'] = $property['Pix_updt'];
             $property_formatted['description'] = $property['Ad_text'];
 
+            //set up arguments before entering post to wp
             $post_args = array(
                 'post_title' => $property_formatted['address'],
                 'post_content' => $property_formatted['description'],
@@ -74,24 +81,25 @@ class Save
                 'post_type' => 'wptrebs_property',
             );
 
+
+            //insert post and return new post id
             $posted_property = wp_insert_post($post_args);
 
+            //add post meta using the new post id and good looking array
             foreach ($property_formatted as $key => $value) {
                 if (!empty($value)) {
                     add_post_meta( $posted_property, $key, $value, true ) || update_post_meta( $posted_property, $key, $value );
                 }
             }
 
+            //create photos
+            self::photos($this->photos);
 
         }
-
-
-        //create post
-
-        //organize data into custom fields
 
         //store first photo as featured
 
         //store remaining photos in array in custom field
     }
+
 }

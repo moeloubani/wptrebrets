@@ -41,8 +41,7 @@ class Feed
         $this->search = $this->retsfeed->SearchQuery(
             'Property', // Resource
             'ResidentialProperty',// Class
-            '((lp_dol=1500000+))', // DMQL
-            //'((ml_num='.$this->mls.'))', // DMQL
+            '((ml_num='.$this->mls.'))', // DMQL
             array(
                 'Format' => 'COMPACT-DECODED',
                 'Select' => $this->fields,

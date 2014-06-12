@@ -49,44 +49,14 @@ function wptrebretsLoad() {
     $thing->search();
 
 //print_r($thing->show());
-    $save = new \wptrebrets\inc\Save($thing->mls);
+    $save = new \wptrebrets\inc\Save($thing->mls, $thing->photos());
 //$save->photos($thing->photos());
 
     $save->posts($thing->show());
 
-
-    global $user_ID, $wpdb;
-
-    $query = $wpdb->prepare(
-        'SELECT ID FROM ' . $wpdb->posts . '
-        WHERE post_title = %s
-        AND post_type = \'stuff\'',
-        $postTitle
-    );
-    $wpdb->query( $query );
-
-    if ( $wpdb->num_rows ) {
-        $post_id = $wpdb->get_var( $query );
-        $meta = get_post_meta( $post_id, 'times', TRUE );
-        $meta++;
-        update_post_meta( $post_id, 'times', $meta );
-    } else {
-        $new_post = array(
-            'post_title' => $postTitle,
-            'post_content' => '',
-            'post_status' => 'publish',
-            'post_date' => date('Y-m-d H:i:s'),
-            'post_author' => '',
-            'post_type' => 'stuff',
-            'post_category' => array(0)
-        );
-
-        $post_id = wp_insert_post($new_post);
-        add_post_meta($post_id, 'times', '1');
-    }
 }
 
-//add_action('init', 'wptrebretsLoad');
+add_action('init', 'wptrebretsLoad');
 
 
 //$listings = $thing->show();

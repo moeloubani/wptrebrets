@@ -11,11 +11,11 @@ namespace wptrebrets\inc;
 
 class CheckOld {
 
-    public function __construct($title) {
+    public function __construct() {
 
     }
 
-    static function test($title) {
+    static function test($title, $timestamp, $status) {
         global $user_ID, $wpdb;
 
         $query = $wpdb->prepare(
@@ -28,12 +28,20 @@ class CheckOld {
 
         if ( $wpdb->num_rows ) {
             $post_id = $wpdb->get_var( $query );
+            $added = get_post_meta($post_id, 'wptrebs_last_updated_text', true);
 
+            $added = strtotime($added);
 
-
-            return $post_id;
+            if ($status !== 'A') {
+                wp_delete_post( $post_id, true);
+                $result = array('delete' => $post_id);
+            } elseif ($timestamp > $added) {
+                $result = array('update' => $post_id);
+            }
         } else {
-            return false;
+            $result = 'passed';
         }
+
+        return $result;
     }
 } 

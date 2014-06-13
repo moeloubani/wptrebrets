@@ -84,30 +84,43 @@ class Save
             $property_formatted['last_updated_photos'] = $property['Pix_updt'];
             $property_formatted['description'] = $property['Ad_text'];
 
-            if(CheckOld::test($property_formatted['address'], $property_formatted['last_updated_text'])) {
+            $update_check = CheckOld::test($property_formatted['address'], $property_formatted['last_updated_text'], $property_formatted['status']);
 
-            }
+            if (is_array($update_check)) {
+                if (isset($update_check['update'])) {
 
-            //set up arguments before entering post to wp
-            $post_args = array(
-                'post_title' => $property_formatted['address'],
-                'post_content' => $property_formatted['description'],
-                'post_status' => 'publish',
-                'post_type' => 'wptrebs_property',
-            );
+                    $update = new Update($property_formatted['mls'], $update_check['update'], get_post_meta($update_check['update'], 'wptrebs_photos', true));
 
+                } elseif (isset($update_check['delete'])) {
 
-            //insert post and return new post id
-            $posted_property = wp_insert_post($post_args);
-
-            //add post meta using the new post id and good looking array
-            foreach ($property_formatted as $key => $value) {
-                if (!empty($value)) {
-                    add_post_meta($posted_property, 'wptrebs_' . $key, $value, true) || update_post_meta($posted_property, 'wptrebs_' . $key, $value);
                 }
+                break;
+            } else {
+
+                //set up arguments before entering post to wp
+                $post_args = array(
+                    'post_title' => $property_formatted['address'],
+                    'post_content' => $property_formatted['description'],
+                    'post_status' => 'publish',
+                    'post_type' => 'wptrebs_property',
+                );
+
+
+                //insert post and return new post id
+                $posted_property = wp_insert_post($post_args);
+
+                //add post meta using the new post id and good looking array
+                foreach ($property_formatted as $key => $value) {
+                    if (!empty($value)) {
+                        add_post_meta($posted_property, 'wptrebs_' . $key, $value, true) || update_post_meta($posted_property, 'wptrebs_' . $key, $value);
+                    }
+                }
+
+                self::photosMeta($property_formatted['mls'], $posted_property);
+
             }
 
-            self::photosMeta($property_formatted['mls'], $posted_property);
+
         }
     }
 

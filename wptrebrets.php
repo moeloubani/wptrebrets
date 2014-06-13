@@ -16,7 +16,9 @@ require 'library/CMB/init.php';
 //Get custom post type library and create post type
 require 'library/CPT/CPT.php';
 
-$property_type = new CPT('wptrebs_property');
+$property_type = new CPT('wptrebs_property', array(
+    'supports' => array('title', 'editor', 'thumbnail', 'comments', 'custom-fields')
+));
 $property_type->register_taxonomy(array(
     'type' => 'Property Type'
 ));
@@ -56,7 +58,7 @@ function wptrebretsLoad() {
 
 }
 
-add_action('init', 'wptrebretsLoad');
+//add_action('init', 'wptrebretsLoad');
 
 
 //$listings = $thing->show();

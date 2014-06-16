@@ -1,0 +1,16 @@
+.wptrebs_feed {
+    list-style: none;
+    width: 400px;
+}
+
+.wptrebs_feed_item {
+    float: left;
+}
+
+.wptrebs_feed_item img {
+
+}
+
+.wptrebs_clear {
+    clear:both;
+}

@@ -21,18 +21,21 @@ class Feed
         $this->mls = $mls;
         $this->password = $password;
         $this->url = $url;
+        self::start();
     }
 
 
     public function start()
     {
         $this->retsfeed = new \PHRETS;
+        self::connect();
 
     }
 
     public function connect ()
     {
         $connect = $this->retsfeed->Connect($this->url, $this->login, $this->password);
+        self::search();
         return $connect;
     }
 
@@ -55,7 +58,6 @@ class Feed
     public function photos()
     {
         $photos = $this->retsfeed->GetObject('Property', 'Photo', $this->mls);
-
         return $photos;
     }
 

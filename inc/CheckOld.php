@@ -19,7 +19,7 @@ class CheckOld {
 
     }
 
-    static function data($title, $timestamp, $status) {
+    static function data($title, $added, $status) {
         global $user_ID, $wpdb;
 
         $query = $wpdb->prepare(
@@ -30,24 +30,30 @@ class CheckOld {
         );
         $wpdb->query( $query );
 
+        //dd($wpdb);
+
         if ( $wpdb->num_rows ) {
             $post_id = $wpdb->get_var( $query );
-            $added = get_post_meta($post_id, 'wptrebs_last_updated_text', true);
             $timestamp = get_the_time('U', $post_id);
 
             $added = strtotime($added);
-            $timestamp = strtotime($timestamp);
 
             if ($status !== 'A') {
                 wp_delete_post( $post_id, true);
                 $result = array('delete' => $post_id);
-            } elseif ($timestamp > $added) {
+            } elseif ($timestamp < $added) {
                 $result = array('update' => $post_id);
+                dd($result);
+            } elseif ($timestamp > $added) {
+                $result = array(
+                    'posted' => $timestamp
+                );
             }
         } else {
-            $result = 'passed';
+            $result = array(
+                'new' => 1
+            );
         }
-
         return $result;
     }
 } 

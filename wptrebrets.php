@@ -41,10 +41,11 @@ require 'inc/Save.php';
 //Updates property if already found
 require 'inc/Update.php';
 
-
-
 //Set shortcode to display on site
 require 'inc/Shortcodes.php';
+
+//Get styles and scripts
+require 'inc/wp-functions.php';
 
 //Instantiate plugin
 
@@ -56,16 +57,18 @@ function dd($variable) {
 }
 
 function wptrebretsLoad() {
-    $thing = new \wptrebrets\inc\Feed("lp_dol, ml_num, addr, bath_tot, br, county, rltr, rms, s_r, status, zip, yr_built, area, timestamp_sql, pix_updt, idx_dt, legal_desc, ad_text", 3, "D14hcd", "W2942023,N2878718", "Kf$7439", "http://rets.torontomls.net:6103/rets-treb3pv/server/login");
-    $thing->start();
-    $thing->connect();
-    $thing->search();
+    $feed = new \wptrebrets\inc\Feed("lp_dol, ml_num, addr, bath_tot, br, county, rltr, rms, s_r, status, zip, yr_built, area, timestamp_sql, pix_updt, idx_dt, legal_desc, ad_text", 15, "D14hcd", "W2942023,N2878718,C2870900,W2928560,W2921479", "Kf$7439", "http://rets.torontomls.net:6103/rets-treb3pv/server/login");
+    //var_dump($feed->show());
+    //$thing->start();
+    //$thing->connect();
+    //$thing->search();
 
 //print_r($thing->show());
-    $save = new \wptrebrets\inc\Save($thing->mls, $thing->photos());
-//$save->photos($thing->photos());
+    //var_dump($thing->photos());
+    $save = new \wptrebrets\inc\Save($feed);
 
-    $save->posts($thing->show());
+    //$save->photos($thing->photos());
+    //$save->posts($thing->show());
 
 }
 

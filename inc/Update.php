@@ -23,7 +23,7 @@ class Update extends Save {
     }
 
 
-    public function photos(Array $photos, $date)
+    /*public function photos(Array $photos, $date)
     {
         CheckOld::photos();
 
@@ -33,12 +33,10 @@ class Update extends Save {
 
         //loop through and check if sizes match, if not delete old one and download new one to same name as old one
 
-    }
+    }*/
 
-    public function posts(Array $post)
+    public function posts(Array $property)
     {
-
-        $property = $post[0];
 
         //get post data
         $property_formatted = array();
@@ -64,23 +62,19 @@ class Update extends Save {
         //set up arguments before entering post to wp
         $post_args = array(
             'post_content' => $property_formatted['description'],
-            'post_status' => 'publish',
-            'post_type' => 'wptrebs_property',
-            'post_id' => $this->id
+            'ID' => $this->id,
+            'post_type' => 'wptrebs_property'
         );
 
         //insert post and return new post id
-        $posted_property = wp_insert_post($post_args);
+        $posted = wp_update_post($post_args, true);
 
         //add post meta using the new post id and good looking array
         foreach ($property_formatted as $key => $value) {
             if (!empty($value)) {
-                add_post_meta($this->id, $key, $value, true) || update_post_meta($this->id, $key, $value);
+                add_post_meta($this->id, 'wptrebs_' . $key, $value, true) || update_post_meta($this->id, 'wptrebs_' . $key, $value);
             }
         }
-
-        //update photos
-        self::photos($this->photos, $property_formatted['last_updated_photos']);
 
     }
 

@@ -8,14 +8,15 @@ class Save
     protected $photos;
     protected $mls;
     protected $upload_dir;
+    protected $feed;
 
-    function __construct($mls, $photos)
+    public function __construct(Feed $feed)
     {
-        $this->mls = $mls;
-        $this->photos = $photos;
+        $this->upload_dir = wp_upload_dir();
+        $this->feed = $feed;
+        $this->mls = $feed->mls;
+        self::posts($feed->show());
 
-        $upload_dir = wp_upload_dir();
-        $this->upload_dir = $upload_dir;
     }
 
     public function getDirectory($property) {
@@ -31,28 +32,50 @@ class Save
         return $dir;
     }
 
+    public function getDirectoryURL($property) {
 
-    public function photos(Array $photos)
+        $first_letter = substr($property, 0, 1);
+        $numeric = substr($property, 1);
+        $upload_dir = wp_upload_dir();
+        $dir = $upload_dir['url'] . '/wptreb/' . $first_letter . '/' . $numeric;
+
+        if (!file_exists($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        return $dir;
+    }
+
+
+    public function photos(Array $photos, $id, $property)
     {
 
-        $properties = explode(',', $this->mls);
         $all_photos = array();
 
-        foreach ($properties as $property) {
+        $dir = self::getDirectory($property);
 
-            $dir = self::getDirectory($property);
+        $n = 1;
+        $last = false;
 
-            $n = 1;
+        foreach ($photos as $key => $photo) {
+            $filename = $n.'.jpg';
 
-            foreach ($photos as $photo) {
-
-                file_put_contents($dir.'/'.$n.'.jpg', $photo['Data']);
-
-                $all_photos[$property][] = $dir.'/'.$n.'.jpg';
-
-                $n++;
+            if ($key == count($photos) - 1) {
+                $last = true;
             }
+
+            if (!file_exists($dir.'/'.$n.'.jpg')) {
+                file_put_contents($dir.'/'.$n.'.jpg', $photo['Data']);
+                self::addPhotoToWordPress($filename, $dir, $id, $property, $last);
+            }
+
+            $all_photos[$property][] = $dir.'/'. $filename;
+
+
+
+            $n++;
         }
+
 
     }
 
@@ -84,66 +107,80 @@ class Save
             $property_formatted['last_updated_photos'] = $property['Pix_updt'];
             $property_formatted['description'] = $property['Ad_text'];
 
+            $update_check = '';
             $update_check = CheckOld::data($property_formatted['address'], $property_formatted['last_updated_text'], $property_formatted['status']);
+            var_dump($update_check);
 
             if (is_array($update_check)) {
-                dd($update_check);
+
                 if (isset($update_check['update'])) {
                     $update = new Update($property_formatted['mls'], $update_check['update'], get_post_meta($update_check['update'], 'wptrebs_photos', true));
-                }
-                break;
-            } else {
+                    $update->posts($property);
+                } elseif (isset($update_check['new'])) {
+                    //set up arguments before entering post to wp
+                    $post_args = array(
+                        'post_title' => $property_formatted['address'],
+                        'post_content' => $property_formatted['description'],
+                        'post_status' => 'publish',
+                        'post_type' => 'wptrebs_property',
+                    );
 
-                //set up arguments before entering post to wp
-                $post_args = array(
-                    'post_title' => $property_formatted['address'],
-                    'post_content' => $property_formatted['description'],
-                    'post_status' => 'publish',
-                    'post_type' => 'wptrebs_property',
-                );
+                    //insert post and return new post id
+                    $posted_property = wp_insert_post($post_args);
 
-
-                //insert post and return new post id
-                $posted_property = wp_insert_post($post_args);
-
-                //add post meta using the new post id and good looking array
-                foreach ($property_formatted as $key => $value) {
-                    if (!empty($value)) {
-                        add_post_meta($posted_property, 'wptrebs_' . $key, $value, true) || update_post_meta($posted_property, 'wptrebs_' . $key, $value);
+                    //add post meta using the new post id and good looking array
+                    foreach ($property_formatted as $key => $value) {
+                        if (!empty($value)) {
+                            add_post_meta($posted_property, 'wptrebs_' . $key, $value, true) || update_post_meta($posted_property, 'wptrebs_' . $key, $value);
+                        }
                     }
-                }
 
-                self::photosMeta($property_formatted['mls'], $posted_property);
+                    $this->feed->mls = $property_formatted['mls'];
+                    $photos = $this->feed->photos();
+
+                    self::photos($photos, $posted_property, $property_formatted['mls']);
+                }
 
             }
 
 
         }
+
+
     }
 
-    public function photosMeta($mls, $id) {
-        $dir = self::getDirectory($mls);
+    protected static function addPhotoToWordPress($filename, $dir, $parent_post_id, $mls, $last) {
 
-        //get list of photos
-        $all_photos = array();
+        // $filename should be the path to a file in the upload directory.
+        $filename = $dir . '/' . $filename;
 
-        if (is_dir($dir)) {
-            if ($dh = opendir($dir)) {
-                while (($file = readdir($dh)) !== false) {
-                    $all_photos[$mls][] = $dir . $file;
-                }
-                closedir($dh);
+        // Check the type of tile. We'll use this as the 'post_mime_type'.
+        $filetype = wp_check_filetype( basename( $filename ), null );
 
-                foreach ($all_photos[$mls] as $key => $value) {
-                    if (strpos($value, 'jpg') == false) {
-                        unset($all_photos[$mls][$key]);
-                    }
-                }
+        // Get the path to the upload directory.
+        $wp_upload_dir = $dir;
 
-                $all_photos[$mls] = array_values($all_photos[$mls]);
+        // Prepare an array of post data for the attachment.
+        $attachment = array(
+            'guid'           => self::getDirectoryURL($mls) .'/'. basename( $filename ),
+            'post_mime_type' => $filetype['type'],
+            'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
+            'post_content'   => '',
+            'post_status'    => 'inherit'
+        );
 
-                add_post_meta($id, 'wptrebs_photos', $all_photos[$mls], true ) || update_post_meta( $id, 'wptrebs_photos', $all_photos[$mls] );
-            }
+        // Insert the attachment.
+        $attach_id = wp_insert_attachment( $attachment, $filename, $parent_post_id );
+
+        // Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
+        require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+        // Generate the metadata for the attachment, and update the database record.
+        $attach_data = wp_generate_attachment_metadata( $attach_id, $filename );
+        wp_update_attachment_metadata( $attach_id, $attach_data );
+
+        if ($last == true) {
+            add_post_meta($parent_post_id, '_thumbnail_id', $attach_id);
         }
     }
 

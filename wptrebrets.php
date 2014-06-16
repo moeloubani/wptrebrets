@@ -50,7 +50,10 @@ require 'inc/Shortcodes.php';
 
 //get feed info from feed class
 
-
+function dd($variable) {
+    var_dump($variable);
+    die();
+}
 
 function wptrebretsLoad() {
     $thing = new \wptrebrets\inc\Feed("lp_dol, ml_num, addr, bath_tot, br, county, rltr, rms, s_r, status, zip, yr_built, area, timestamp_sql, pix_updt, idx_dt, legal_desc, ad_text", 3, "D14hcd", "W2942023,N2878718", "Kf$7439", "http://rets.torontomls.net:6103/rets-treb3pv/server/login");

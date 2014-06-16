@@ -87,10 +87,9 @@ class Save
             $update_check = CheckOld::data($property_formatted['address'], $property_formatted['last_updated_text'], $property_formatted['status']);
 
             if (is_array($update_check)) {
+                dd($update_check);
                 if (isset($update_check['update'])) {
-
                     $update = new Update($property_formatted['mls'], $update_check['update'], get_post_meta($update_check['update'], 'wptrebs_photos', true));
-
                 }
                 break;
             } else {

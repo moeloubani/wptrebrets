@@ -69,7 +69,7 @@ function wptrebretsLoad() {
 
 }
 
-add_action('init', 'wptrebretsLoad');
+//add_action('init', 'wptrebretsLoad');
 
 
 //$listings = $thing->show();

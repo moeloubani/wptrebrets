@@ -84,14 +84,12 @@ class Save
             $property_formatted['last_updated_photos'] = $property['Pix_updt'];
             $property_formatted['description'] = $property['Ad_text'];
 
-            $update_check = CheckOld::test($property_formatted['address'], $property_formatted['last_updated_text'], $property_formatted['status']);
+            $update_check = CheckOld::data($property_formatted['address'], $property_formatted['last_updated_text'], $property_formatted['status']);
 
             if (is_array($update_check)) {
                 if (isset($update_check['update'])) {
 
                     $update = new Update($property_formatted['mls'], $update_check['update'], get_post_meta($update_check['update'], 'wptrebs_photos', true));
-
-                } elseif (isset($update_check['delete'])) {
 
                 }
                 break;

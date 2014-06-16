@@ -32,8 +32,16 @@ require 'library/PHRets/phrets.php';
 //Get feed
 require 'inc/Feed.php';
 
+//Checks if property already exists
+require 'inc/CheckOld.php';
+
 //Save feed as posts
 require 'inc/Save.php';
+
+//Updates property if already found
+require 'inc/Update.php';
+
+
 
 //Set shortcode to display on site
 require 'inc/Shortcodes.php';
@@ -45,7 +53,7 @@ require 'inc/Shortcodes.php';
 
 
 function wptrebretsLoad() {
-    $thing = new \wptrebrets\inc\Feed("lp_dol, ml_num, addr, bath_tot, br, county, rltr, rms, s_r, status, zip, yr_built, area, timestamp_sql, pix_updt, idx_dt, legal_desc, ad_text", 3, "D14hcd", "W2925698,C2902118", "Kf$7439", "http://rets.torontomls.net:6103/rets-treb3pv/server/login");
+    $thing = new \wptrebrets\inc\Feed("lp_dol, ml_num, addr, bath_tot, br, county, rltr, rms, s_r, status, zip, yr_built, area, timestamp_sql, pix_updt, idx_dt, legal_desc, ad_text", 3, "D14hcd", "W2942023,N2878718", "Kf$7439", "http://rets.torontomls.net:6103/rets-treb3pv/server/login");
     $thing->start();
     $thing->connect();
     $thing->search();
@@ -58,7 +66,7 @@ function wptrebretsLoad() {
 
 }
 
-//add_action('init', 'wptrebretsLoad');
+add_action('init', 'wptrebretsLoad');
 
 
 //$listings = $thing->show();

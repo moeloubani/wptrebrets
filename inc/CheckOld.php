@@ -15,7 +15,11 @@ class CheckOld {
 
     }
 
-    static function test($title, $timestamp, $status) {
+    public static function photos() {
+
+    }
+
+    static function data($title, $timestamp, $status) {
         global $user_ID, $wpdb;
 
         $query = $wpdb->prepare(
@@ -29,8 +33,10 @@ class CheckOld {
         if ( $wpdb->num_rows ) {
             $post_id = $wpdb->get_var( $query );
             $added = get_post_meta($post_id, 'wptrebs_last_updated_text', true);
+            $timestamp = get_the_time('U', $post_id);
 
             $added = strtotime($added);
+            $timestamp = strtotime($timestamp);
 
             if ($status !== 'A') {
                 wp_delete_post( $post_id, true);

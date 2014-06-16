@@ -23,9 +23,9 @@ class Update extends Save {
     }
 
 
-    public function photos(Array $photos)
+    public function photos(Array $photos, $date)
     {
-        //check if photos were updated
+        CheckOld::photos();
 
         //get current photos list
 
@@ -37,6 +37,8 @@ class Update extends Save {
 
     public function posts(Array $post)
     {
+
+        $property = $post[0];
 
         //get post data
         $property_formatted = array();
@@ -78,7 +80,7 @@ class Update extends Save {
         }
 
         //update photos
-        self::photos($this->photos);
+        self::photos($this->photos, $property_formatted['last_updated_photos']);
 
     }
 

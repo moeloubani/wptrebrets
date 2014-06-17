@@ -26,5 +26,7 @@ Everything updates well but photos still not updating all the way, working on it
 
 
 Moe Loubani
+
 http://www.moeloubani.com
+
 moe@loubani.com

@@ -22,19 +22,6 @@ class Update extends Save {
         $this->photos = $photos;
     }
 
-
-    /*public function photos(Array $photos, $date)
-    {
-        CheckOld::photos();
-
-        //get current photos list
-
-        //get new photos list
-
-        //loop through and check if sizes match, if not delete old one and download new one to same name as old one
-
-    }*/
-
     public function posts(Array $property)
     {
 

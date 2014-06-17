@@ -3,6 +3,26 @@ wptrebrets
 
 Add data from TREB to WordPress
 
-Currently in development, will allow for easy integration of TREB IDX data into your WordPress site through custom post types.
+This plugin will download listings based on the MLS numbers you add to Settings -> WPTREBS Settings. It will download the properties and add them as a post type as well as the images and store them on your server.
 
-Currently working on photo updates, other updates are working
+Once a day it will run a check to see if it needs to update to the latest version of the listing or remove the listing if it doesn't exist.
+
+To install it just upload the plugin into your plugins folder and add the MLS numbers to your settings. It will automatically be run in a day.
+
+No support is offered with this plugin but if you have any questions please email me at moe@loubani.com, I'm also available for full real estate site solutions.
+
+
+
+Version 0.1:
+
+First release, use at your own risk.
+
+
+To do:
+
+Everything updates well but photos still not updating all the way, working on it.
+
+
+Moe Loubani
+http://www.moeloubani.com
+moe@loubani.com

@@ -11,14 +11,6 @@ namespace wptrebrets\inc;
 
 class CheckOld {
 
-    public function __construct() {
-
-    }
-
-    public static function photos() {
-
-    }
-
     static function data($title, $added, $status) {
         global $user_ID, $wpdb;
 

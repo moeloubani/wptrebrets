@@ -8,7 +8,7 @@ class Options {
 	 * Option key, and option page slug
 	 * @var string
 	 */
-	protected static $key = 'wptrebrets-options';
+	protected static $key = 'wptrebrets_options';
 	/**
 	 * Array of metaboxes/fields
 	 * @var array
@@ -103,10 +103,10 @@ class Options {
 					'type' => 'text',
 				),
 				array(
-					'name' => __( 'Agent ID', 'wptrebrets' ),
-					'desc' => __( 'Your RETS agent ID.', 'wptrebrets' ),
-					'id'   => 'rets_agent',
-					'type' => 'text',
+					'name' => __( 'MLS Numbers', 'wptrebrets' ),
+					'desc' => __( 'MLS numbers of your listings (include starting letter) separate with commas (######,#######,#######).', 'wptrebrets' ),
+					'id'   => 'rets_mls',
+					'type' => 'textarea_small',
 				),
 
 			),

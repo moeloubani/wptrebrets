@@ -1,16 +1,67 @@
 .wptrebs_feed {
-    list-style: none;
-    width: 400px;
+    background: #E6E6E6;
+    margin-bottom: 5px;
 }
 
 .wptrebs_feed_item {
     float: left;
+    margin-right: 13px;
+    padding: 5px 0 10px 0;
+}
+
+.wptrebs_feed .wptrebs_feed_item:nth-child(4n) {
+    margin-right: 0;
 }
 
 .wptrebs_feed_item img {
 
 }
 
+.wptrebs_feed_item .price {
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 3px;
+}
+
 .wptrebs_clear {
     clear:both;
+}
+
+.featured-image {
+    float: left;
+    width: 100%;
+    text-align: center;
+    background: #E9E6E6;
+    padding: 15px 0;
+    margin-bottom: 5px;
+}
+
+#property .main_heading span {
+    float:right;
+    margin-right: 30px;
+}
+
+#property .features {
+
+}
+
+#property .features li {
+    display: block;
+    width: 46%;
+    margin-right: 5px;
+    font-size: 14px;
+    margin-bottom: 7px;
+}
+
+#property h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+#property .gallery {
+    margin-top: 10px;
+}
+
+#property .gallery img:hover {
+    cursor: pointer;
 }

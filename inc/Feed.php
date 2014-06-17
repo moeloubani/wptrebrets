@@ -45,7 +45,6 @@ class Feed
             'Property', // Resource
             'ResidentialProperty',// Class
             '((ml_num='.$this->mls.'))', // DMQL
-            //'((lp_dol=1000000+))', // DMQL
             array(
                 'Format' => 'COMPACT-DECODED',
                 'Select' => $this->fields,
@@ -72,12 +71,6 @@ class Feed
         }
 
         return $results;
-    }
-
-    public function close(Array $photos)
-    {
-        $this->retsfeed->FreeResult($photos);
-        $this->retsfeed->Disconnect();
     }
 
 

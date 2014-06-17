@@ -109,7 +109,6 @@ class Save
 
             $update_check = '';
             $update_check = CheckOld::data($property_formatted['address'], $property_formatted['last_updated_text'], $property_formatted['status']);
-            var_dump($update_check);
 
             if (is_array($update_check)) {
 

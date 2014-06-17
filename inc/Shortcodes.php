@@ -51,5 +51,3 @@ class Shortcodes
 }
 
 add_shortcode( 'wptrebs_feed', array( Shortcodes::get_instance(), 'FeedShortcode' ) );
-
-//add_shortcode( 'wptrebsFeed', 'wptrebs_feedShortcode' );

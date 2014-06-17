@@ -11,7 +11,9 @@ To install it just upload the plugin into your plugins folder and add the MLS nu
 
 No support is offered with this plugin but if you have any questions please email me at moe@loubani.com, I'm also available for full real estate site solutions.
 
+Usage: use the post types as you would any other post. The custom fields are visible if you check the custom fields box at the top.
 
+Use shortcode [wptrebs_feed number="4"] to get a feed of properties, you can pass a number to retrieve or leave it out to get the default 4.
 
 Version 0.1:
 

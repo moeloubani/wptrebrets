@@ -30,3 +30,5 @@ Moe Loubani
 http://www.moeloubani.com
 
 moe@loubani.com
+
+Edit: I've decided to expand on this plugin in the near future, keep checking back here for updates and please submit any issues you're having if you use it so that I can make sure it's fixed on the next pass.

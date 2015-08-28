@@ -27,30 +27,28 @@ class Feed
 
     public function start()
     {
-        $this->retsfeed = new \PHRETS;
-        self::connect();
+        $config = new \PHRETS\Configuration;
+        $config->setLoginUrl($this->url)
+            ->setUsername($this->login)
+            ->setPassword($this->password)
+            ->setRetsVersion('1.7');
 
-    }
-
-    public function connect ()
-    {
-        $connect = $this->retsfeed->Connect($this->url, $this->login, $this->password);
+        $this->retsfeed = new \PHRETS\Session($config);
+        $connect = $this->retsfeed->Login();
         self::search();
-        return $connect;
     }
 
     public function search ()
     {
-        $this->search = $this->retsfeed->SearchQuery(
+        $this->search = $this->retsfeed->Search(
             'Property', // Resource
             'ResidentialProperty',// Class
-            '((ml_num='.$this->mls.'))', // DMQL
-            array(
+            '((status=A))', // DMQL
+            [
+                'Count' => 1, // count and records
                 'Format' => 'COMPACT-DECODED',
-                'Select' => $this->fields,
-                'Count' => 1,
-                'Limit' => $this->limit
-            )
+                'Limit' => $this->limit,
+            ]
         );
     }
 
@@ -62,10 +60,8 @@ class Feed
 
     public function show()
     {
-        if ($this->retsfeed->TotalRecordsFound() > 0) {
-            while ($data = $this->retsfeed->FetchRow($this->search)) {
-                $results[] = $data;
-            }
+        if ($this->search->getReturnedResultsCount() > 0) {
+            $results = $this->search->toArray();
         } else {
             $results = '0 Records Found.';
         }

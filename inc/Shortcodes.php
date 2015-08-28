@@ -1,4 +1,7 @@
 <?php
+
+namespace wptrebrets\inc;
+
 class Shortcodes
 {
     private $var = 'foo';
@@ -25,7 +28,7 @@ class Shortcodes
 
         $args = array(
             'posts_per_page' => $number,
-            'post_type' => 'wptrebs_property',
+            'post_type' => 'property',
             'orderby' => 'meta_value',
             'meta_key' => 'wptrebs_last_updated_text'
 

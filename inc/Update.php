@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: moeloubani
- * Date: 2014-06-10
- * Time: 5:13 AM
- */
 
 namespace wptrebrets\inc;
 
@@ -45,12 +39,13 @@ class Update extends Save {
         $property_formatted['last_updated_text'] = $property['Timestamp_sql'];
         $property_formatted['last_updated_photos'] = $property['Pix_updt'];
         $property_formatted['description'] = $property['Ad_text'];
+        $property_formatted['full_dump'] = $property;
 
         //set up arguments before entering post to wp
         $post_args = array(
             'post_content' => $property_formatted['description'],
             'ID' => $this->id,
-            'post_type' => 'wptrebs_property'
+            'post_type' => 'property'
         );
 
         //insert post and return new post id

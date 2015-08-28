@@ -79,6 +79,10 @@ class Options {
 		if ( ! empty( self::$plugin_options ) )
 			return self::$plugin_options;
 
+		/*
+		 * TODO: Add way to integrate other post types' custom fields
+		 */
+
 		self::$plugin_options = array(
 			'id'         => 'plugin_options',
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( self::$key, ), ),
@@ -101,13 +105,7 @@ class Options {
 					'desc' => __( 'Add the password from the information sent to you.', 'wptrebrets' ),
 					'id'   => 'rets_password',
 					'type' => 'text',
-				),
-				array(
-					'name' => __( 'MLS Numbers', 'wptrebrets' ),
-					'desc' => __( 'MLS numbers of your listings (include starting letter) separate with commas (######,#######,#######).', 'wptrebrets' ),
-					'id'   => 'rets_mls',
-					'type' => 'textarea_small',
-				),
+				)
 
 			),
 		);
@@ -125,16 +123,3 @@ class Options {
 
 }
 
-// Get it started
-$wptrebrets_settings = new Options();
-$wptrebrets_settings->hooks();
-
-/**
- * Wrapper function around cmb_get_option
- * @since  0.1.0
- * @param  string  $key Options array key
- * @return mixed        Option value
- */
-function wptrebrets_get_option( $key = '' ) {
-	return cmb_get_option( Options::key(), $key );
-}

@@ -1,0 +1,23 @@
+{
+    "name": "moe/wptrebrets",
+    "description": "Plugin used to add properties from the TREB RETS system into WordPress sites.",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Moe Loubani",
+            "email": "moe@loubani.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {
+        "troydavisson/phrets": "2.*"
+    },
+    "autoload": {
+        "classmap": ["inc/"],
+        "files": [
+            "library/CMB/init.php",
+            "library/CPT/CPT.php",
+            "helpers/wp-functions.php"
+        ]
+    }
+}

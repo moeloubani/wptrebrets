@@ -24,6 +24,7 @@ function wi_create_daily_property_schedule(){
 
 //Hook our function , wi_create_backup(), into the action wi_create_daily_backup
 add_action( 'wi_create_daily_property', 'wi_create_property' );
+
 function wi_create_property(){
 	add_action('init', 'wptrebretsLoad');
 }

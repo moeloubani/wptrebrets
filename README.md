@@ -5,11 +5,11 @@ Add data from TREB to WordPress
 
 This plugin will download listings from the TREB server. It will download the properties and add them as a post type as well as the images and store them on your server. It will set up a cron job through WordPress to download and update properties each night.
 
-To install it just upload the plugin into your plugins folder and enter your information in Settings -> TREB Settings.
+To install it from the files in this repo you will have to have Composer installed and be able to run composer update to get the dependencies. If this isn't possible for you you can also visit this link to download a copy that includes everything and is ready to upload to the WordPress: http://www.moeloubani.com/new-version-of-treb-wordpress-plugin/
 
-No support is offered with this plugin but if you have any questions please email me at moe@loubani.com, I'm also available for full real estate site solutions and integration / customization of this plugin.
+No support is offered with this plugin but if you have any questions please email me at moe@loubani.com, I'm also available for integration / customization of this plugin or consulting on any type of web development project.
 
-Usage: use the post types as you would any other post. The custom fields are visible if you check the custom fields box at the top.
+Usage: use the post types as you would any other post - it will be a post type called property. The custom fields are visible if you check the custom fields box at the top above help.
 
 Use shortcode [wptrebs_feed number="4"] to get a feed of properties, you can pass a number to retrieve or leave it out to get the default 4.
 

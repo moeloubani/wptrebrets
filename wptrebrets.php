@@ -1,6 +1,4 @@
 <?php
-if(function_exists('xdebug_disable')) { xdebug_disable(); }
-
 /*
 Plugin Name: TREB RETS Feed Plugin
 Plugin URI: http://www.moeloubani.com/treb-plugin

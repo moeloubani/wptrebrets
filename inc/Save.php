@@ -10,15 +10,25 @@ class Save
     protected $upload_dir;
     protected $feed;
 
+    /**
+     * Takes a Feed object from a completed search and saves it
+     *
+     * @param Feed $feed
+     */
     public function __construct(Feed $feed)
     {
         $this->upload_dir = wp_upload_dir();
         $this->feed = $feed;
         $this->mls = $feed->mls;
-        self::posts($feed->show());
-
+        self::posts($feed->get());
     }
 
+    /**
+     * Uses the filename and MLS number to generate a directory to save the files to, this returns the path
+     *
+     * @param array|object $property
+     * @return string
+     */
     public function getDirectory($property)
     {
         //Get the path to the upload directory and create it if it isn't there
@@ -33,6 +43,12 @@ class Save
         return $dir;
     }
 
+    /**
+     * Uses the filename and MLS number to get the URL to the stored images
+     *
+     * @param array|object $property
+     * @return string
+     */
     public function getDirectoryURL($property)
     {
         //Get the URL to the upload directory
@@ -45,6 +61,14 @@ class Save
     }
 
 
+    /**
+     * Loops through the images and stores them on the server - at the same time it links the images to the post so you
+     * later use them for a gallery/slideshow
+     *
+     * @param $photos
+     * @param $id
+     * @param $property
+     */
     public function photos($photos, $id, $property)
     {
         $all_photos = array();
@@ -75,8 +99,14 @@ class Save
 
     }
 
+    /**
+     * Saves the posts into WordPress
+     *
+     * @param array|object $post
+     */
     public function posts($post)
     {
+        dd($post);
 
         /*
          * TODO: If this isn't an array it probably is an error message, need to handle it
@@ -137,8 +167,7 @@ class Save
                             }
                         }
 
-                        $this->feed->mls = $property_formatted['mls'];
-                        $photos = $this->feed->photos();
+                        $photos = $this->feed->photos($property_formatted['mls']);
 
                         //Get the photos
                         self::photos($photos, $posted_property, $property_formatted['mls']);
@@ -152,7 +181,16 @@ class Save
 
     }
 
-    protected static function addPhotoToWordPress($filename, $dir, $parent_post_id, $mls, $last)
+    /**
+     * Links the picture to a WordPress post
+     *
+     * @param $filename
+     * @param $dir
+     * @param $parent_post_id
+     * @param $mls
+     * @param $last
+     */
+    protected function addPhotoToWordPress($filename, $dir, $parent_post_id, $mls, $last)
     {
 
         // $filename should be the path to a file in the upload directory.

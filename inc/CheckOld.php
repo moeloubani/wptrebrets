@@ -5,6 +5,12 @@ namespace wptrebrets\inc;
 
 class CheckOld {
 
+    /**
+     * @param $title
+     * @param $added
+     * @param $status
+     * @return array
+     */
     static function data($title, $added, $status)
     {
         global $user_ID, $wpdb;

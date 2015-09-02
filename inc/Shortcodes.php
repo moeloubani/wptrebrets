@@ -4,10 +4,11 @@ namespace wptrebrets\inc;
 
 class Shortcodes
 {
-    private $var = 'foo';
-
     protected static $instance = NULL;
 
+    /**
+     * @return null|Shortcodes
+     */
     public static function get_instance()
     {
         // create an object
@@ -15,7 +16,10 @@ class Shortcodes
         return self::$instance; // return the object
     }
 
-    // Add Shortcode
+    /**
+     * Add Shortcode
+     * @param $atts
+     */
     public function FeedShortcode( $atts ) {
 
         // Attributes

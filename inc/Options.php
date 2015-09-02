@@ -105,6 +105,12 @@ class Options {
 					'desc' => __( 'Add the password from the information sent to you.', 'wptrebrets' ),
 					'id'   => 'rets_password',
 					'type' => 'text',
+				),
+				array(
+					'name' => __( 'RETS Limit', 'wptrebrets' ),
+					'desc' => __( 'How many properties to get on initial upload.', 'wptrebrets' ),
+					'id'   => 'rets_limit',
+					'type' => 'text',
 				)
 
 			),

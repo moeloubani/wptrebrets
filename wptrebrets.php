@@ -1,11 +1,9 @@
 <?php
-if(function_exists('xdebug_disable')) { xdebug_disable(); }
-
 /*
 Plugin Name: TREB RETS Feed Plugin
 Plugin URI: http://www.moeloubani.com/treb-plugin
 Description: A plugin made to create a shortcode that pulls in a feed from TREB, now uses PHRETS 2.
-Version: 2.0
+Version: 0.4
 Author: moeloubani
 Author URI: http://www.moeloubani.com
 License: GPL
@@ -26,20 +24,21 @@ function dd($variable) {
 require_once('vendor/autoload.php');
 
 function checkForPostType() {
+    $property_type = new CPT('property', array(
+        'supports' => array('title', 'editor', 'thumbnail', 'comments', 'custom-fields')
+    ));
+
     if (!post_type_exists('property') ) {
-
-        $property_type = new CPT('wptrebs_property', array(
-            'supports' => array('title', 'editor', 'thumbnail', 'comments', 'custom-fields')
-        ));
-
         $property_type->register_taxonomy(array(
             'type' => 'Property Type'
         ));
-
     }
 }
 
+checkForPostType();
+
 // Get it started
+$install = new \wptrebrets\inc\Install();
 $wptrebrets_settings = new wptrebrets\inc\Options();
 $wptrebrets_settings->hooks();
 
@@ -47,13 +46,11 @@ function wptrebrets_get_option( $key = '' ) {
     return cmb_get_option( wptrebrets\inc\Options::key(), $key );
 }
 
-//Instantiate plugin
-function wptrebretsLoad() {
-	$mlsnums = wptrebrets_get_option('rets_mls');
-	$retsuser = wptrebrets_get_option('rets_username');
-	$retspass = wptrebrets_get_option('rets_password');
-    $feed = new \wptrebrets\inc\Feed("*", 25, $retsuser, $mlsnums, $retspass, "http://rets.torontomls.net:6103/rets-treb3pv/server/login");
-    $save = new \wptrebrets\inc\Save($feed);
+function wptreb_startUp() {
+    $start = new \wptrebrets\inc\Commands();
+    $start->getInitial();
 }
 
-//add_action('init', 'wptrebretsLoad');
+if (isset($_GET['wptreb_import']) && $_GET['wptreb_import'] === 'treb') {
+    add_action('init', 'wptreb_startUp');
+}

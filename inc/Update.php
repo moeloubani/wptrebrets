@@ -9,6 +9,11 @@ class Update extends Save {
     protected $photos;
     protected $mls;
 
+    /**
+     * @param Feed $mls
+     * @param $id
+     * @param $photos
+     */
     function __construct($mls, $id, $photos)
     {
         $this->mls = $mls;
@@ -16,6 +21,9 @@ class Update extends Save {
         $this->photos = $photos;
     }
 
+    /**
+     * @param array $property
+     */
     public function posts(Array $property)
     {
 

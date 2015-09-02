@@ -27,28 +27,39 @@ Usage: use the post types as you would any other post. The custom fields are vis
 
 Use shortcode [wptrebs_feed number="4"] to get a feed of properties, you can pass a number to retrieve or leave it out to get the default 4.
 
-Version 0.4:
-Documented more, made sure updating works for nightly checks, downloads 25 new properties that were listed the day before each day
+Version 0.4
 
-Version 0.3:
-Made a bunch of changes and documented a lot, updated to PHRets 2.0 and changed the way properties are imported.
+- Lots of documenting
+- New update system that will add 25 properties a day to your site
+- Nightly check to make sure your properties are valid, if they aren't will add - SOLD to the title listing
 
-Version 0.2:
-Cleaned up updating
+Version 0.3
+
+- Cleaned up importing from new version of PHRets, changed run trigger
+
+Version 0.2
+
+- Added Composer to manage some dependencies
+- Moved to PHRets 2.2 from 1.X
+- Moved up minimum requirement to PHP 5.4
 
 Version 0.1:
-First release, use at your own risk.
+
+- First release
+- Imports properties and images to WordPress
+- Adds images to featured and links others to post for gallery or slider plugins
 
 
 To do:
 
-Everything updates well but photos still not updating all the way, working on it.
+- Want to add a search widget as well
+- Adding a simpler way to link between post type
+- Google Maps integration (kind of did this but need to add it into a template)
+- Basic template/theme to use with plugin
 
 
 Moe Loubani
-
 http://www.moeloubani.com
-
 moe@loubani.com
 
 Edit: I've decided to expand on this plugin in the near future, keep checking back here for updates and please submit any issues you're having if you use it so that I can make sure it's fixed on the next pass.

@@ -15,8 +15,8 @@ class Install
 
     public function activate()
     {
-        wp_schedule_event(time(), 'daily', 'wptreb_daily_import');
-        wp_schedule_event(time() + (60*10), 'daily', 'wptreb_daily_clean');
+        wp_schedule_event(time()+ (60 * 60 * 24), 'daily', 'wptreb_daily_import');
+        wp_schedule_event(time() + (60*10) + (60 * 60 * 24), 'daily', 'wptreb_daily_clean');
     }
 
     public function daily_grab()

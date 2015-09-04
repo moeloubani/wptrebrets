@@ -106,7 +106,6 @@ class Save
      */
     public function posts($post)
     {
-        dd($post);
 
         /*
          * TODO: If this isn't an array it probably is an error message, need to handle it
